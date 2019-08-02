@@ -11,15 +11,19 @@ router.get('/notes', (req, res) => {
 
 // one note details
 router.get('/notes/:id', (req, res) => {
+    let note = Note.findById(req.params._id, (err, doc) => {});
+    console.log(note);
 
     //render notes /views/index.ejs
+    let path = req.params._id;
+    // res.redirect('/notes/' + path);
     res.send('our clicked note');
 });
 
 // save note to database
 router.post('/api/notes', async (req, res) => {
 
-    let note = await new Note({
+    let note = new Note({
         title: req.body.title,
         text: req.body.text
     });
@@ -33,4 +37,12 @@ router.post('/api/notes', async (req, res) => {
     res.redirect('/');
 });
 
+//find note by ID and remove it
+router.delete('/api/notes/:id', (req, res) => {
+    let id = req.body._id;
+    Note.findByIdAndRemove(id, () => {})
+});
+
+
 module.exports = router;
+
