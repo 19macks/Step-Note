@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Homepage</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="row mt-5">
+            <!--Block of buttons-->
+            <div class="col-sm-12 text-right">
+                <button type="button" class="btn btn-success btn-lg font-weight-bold m-2 p-3">Home</button>
+                <button type="button" id="add-note" class="btn btn-primary btn-lg font-weight-bold m-2 p-3">+ Add Notes</button>
+                <button type="button" class="btn btn-warning btn-lg font-weight-bold text-secondary m-2 p-3">To-Do List</button>
+            </div>
+        </div>
+
+
+        <div class="row mt-5" id="notesList">
+            <!--List of notes-->
+            <% notes.forEach(note => { %>
+                <div class="col-4 col-sm-4" data-id="<%= note._id %>">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="text-right">
+                                <button type="button" class="btn btn-danger" data-id="<%= note._id %>">x</button>
+                            </div>
+                            <h5 class="card-title font-weight-bold"><%= note.title %></h5>
+                            <p class="card-text font-italic text-secondary"><%= note.text %></p>
+                            <button class="btn btn-outline-warning edit-btn" data-id="<%= note._id %>">Edit</button>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+            <!--List of notes-->
+        </div>
+
+    </div>
+
+    <script src="js/index.js"></script>
+</body>
+</html>

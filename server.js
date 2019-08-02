@@ -1,8 +1,10 @@
 const express = require('express');
-
 const app = express();
 const port = process.env.PORT || 3000;
-// const db = require('/mongoose');
+
+const connectDB = require('./database/database-connection');
+//connect db
+connectDB();
 
 // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.urlencoded( {
@@ -14,9 +16,10 @@ app.use(express.json());
 app.use(express.static(__dirname + '/static'));
 app.set('view engine', 'ejs');
 
-app.get('/', (req, res) => {
-    res.render('index');
-});
+const routeHome = require('./routes/homepage.js');
+const routeAddNote = require('./routes/notes.js');
+app.use('/', routeHome);
+app.use('/', routeAddNote);
 
 app.listen(port, () => {
     console.log('server start ar port: ' + port);
