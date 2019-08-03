@@ -18,27 +18,16 @@ router.get('/notes/:id', async (req, res) => {
 // save note to database
 router.post('/api/notes', async (req, res) => {
 
-    let note = new Note({
-        title: req.body.title,
-        text: req.body.text
-    });
-    await note.save()
-        .then(doc => {
-            console.log(doc)
-        })
-        .catch(err => {
-            console.error(err)
-        });
-    res.redirect('/');
+    let note = new Note(req.body);
+    await note.save((err, note) => {
+        if (err) return console.error(err);
+        res.redirect('/');
+    })
 });
 
 //edit note
 router.put('/api/notes/:id', async (req, res) => {
-    await Note.updateOne({_id: req.body._id },
-        {
-            title: req.body.title,
-            text: req.body.text
-        });
+    await Note.updateOne({_id: req.body._id }, req.body);
     res.redirect('/');
 });
 
