@@ -5,23 +5,24 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>add new note</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <title>Note details</title>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+
 </head>
 <body>
     <div class="container">
 
         <div class="form-group">
             <label for="note-title">Title</label>
-            <input type="text" class="form-control" id="note-title">
+            <input type="text" class="form-control" id="note-title" value="<%= note.title %>">
         </div>
         <div class="form-group">
             <label for="note-text">Text</label>
-            <input type="text" class="form-control" id="note-text">
+            <textarea type="text" class="form-control" id="note-text"><%= note.text %></textarea>
         </div>
-            <button id = "createNoteButton" class="btn btn-primary">Create a note</button>
+        <button id = "editNoteButton" class="btn btn-primary" data-id="<%= note._id %>">Edit note</button>
     </div>
+    <script src="/js/note/edit-note.js"></script>
 
-    <script src="/js/note/add-note.js"></script>
 </body>
 </html>

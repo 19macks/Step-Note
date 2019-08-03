@@ -4,22 +4,21 @@ const Note = require('../models/notes');
 
 // create note template
 router.get('/notes', (req, res) => {
-
-    //render notes /views/index.ejs
+    //render notes /views/add-note.ejs
     res.render('add-note');
 });
 
 // one note details
-router.get('/notes/:id', (req, res) => {
-
-    //render notes /views/index.ejs
-    res.send('our clicked note');
+router.get('/notes/:id', async (req, res) => {
+    let note = await Note.findById(req.params.id, (err, doc) => {});
+    //render notes /views/note-details.ejs
+    res.render('note-details', { note });
 });
 
 // save note to database
 router.post('/api/notes', async (req, res) => {
 
-    let note = await new Note({
+    let note = new Note({
         title: req.body.title,
         text: req.body.text
     });
@@ -33,4 +32,21 @@ router.post('/api/notes', async (req, res) => {
     res.redirect('/');
 });
 
+//edit note
+router.put('/api/notes/:id', async (req, res) => {
+    await Note.updateOne({_id: req.body._id },
+        {
+            title: req.body.title,
+            text: req.body.text
+        });
+    res.redirect('/');
+});
+
+//find note by ID and remove it
+router.delete('/api/notes/:id', async (req, res) => {
+    await Note.deleteOne({_id: req.body._id }, () => {});
+    res.json({ deleted: true });
+});
+
 module.exports = router;
+

@@ -26,13 +26,12 @@
             <% notes.forEach(note => { %>
                 <div class="col-4 col-sm-4" data-id="<%= note._id %>">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body note-item" data-id="<%= note._id %>">
                             <div class="text-right">
                                 <button type="button" class="btn btn-danger" data-id="<%= note._id %>">x</button>
                             </div>
                             <h5 class="card-title font-weight-bold"><%= note.title %></h5>
                             <p class="card-text font-italic text-secondary"><%= note.text %></p>
-                            <button class="btn btn-outline-warning edit-btn" data-id="<%= note._id %>">Edit</button>
                         </div>
                     </div>
                 </div>
