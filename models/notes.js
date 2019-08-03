@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let Note = new Schema({
-    title:  String,
-    text:   String,
+    title:  {type: String, required: true},
+    text:   {type: String, required: true},
     },
     //options
     {
