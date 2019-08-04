@@ -5,9 +5,8 @@ const editNoteButton = document.querySelector('#editNoteButton');
 editNoteButton.addEventListener('click', editNote);
 
 async function editNote() {
-    editNoteButton.removeEventListener('click', editNote);
     const titleValue = document.querySelector('#note-title').value;
-    let textValue = document.querySelector('#note-text').value;
+    const textValue = document.querySelector('#note-text').value;
 
     // data will send to database, replace values of properties from input fields
     let noteId = editNoteButton.dataset.id;
