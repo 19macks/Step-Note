@@ -5,7 +5,6 @@
     createNoteButton.addEventListener('click', createNote);
 
     async function createNote() {
-        // createNoteButton.removeEventListener('click', createNote);
         const titleValue = document.querySelector('#note-title').value;
         const textValue = document.querySelector('#note-text').value;
 
