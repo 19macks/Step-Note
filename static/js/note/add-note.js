@@ -10,6 +10,7 @@
 
         // data will send to database, replace values of properties from input fields
         let data = {
+            _type: 'notes',
             title: titleValue,  // input 1
             text: textValue //input 2
         };

@@ -18,8 +18,10 @@ app.set('view engine', 'ejs');
 
 const routeHome = require('./routes/homepage.js');
 const routeAddNote = require('./routes/notes.js');
+const routeAddList = require('./routes/todo-list.js');
 app.use('/', routeHome);
 app.use('/', routeAddNote);
+app.use('/', routeAddList);
 
 app.listen(port, () => {
     console.log('server start ar port: ' + port);
