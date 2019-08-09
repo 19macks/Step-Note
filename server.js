@@ -6,7 +6,6 @@ const connectDB = require('./database/database-connection');
 //connect db
 connectDB();
 
-
 // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.urlencoded( {
     extended: true
