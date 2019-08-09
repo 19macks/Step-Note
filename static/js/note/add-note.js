@@ -25,10 +25,6 @@
                 body: JSON.stringify(data)
             });
 
-        // let answer = await request.json();
-        // console.log(answer);
-        console.log(request);
-
         window.location = request.url;
 }
 
