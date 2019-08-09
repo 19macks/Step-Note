@@ -2,6 +2,11 @@ const app = require('express');
 const router = app.Router();
 const List = require('../models/list');
 
+router.get('/lists', (req, res) => {
+    res.render('add-list')
+} )
+
+
 // view and edit list
 router.get('/lists/:id', async (req, res) => {
     let list = await List.findById(req.params.id);
@@ -18,5 +23,12 @@ router.post('/api/lists', async (req, res) => {
     })
 });
 
+router.delete('/api/lists/:id', async (req, res) => {
+    await List.deleteOne({_id: req.body._id }, () => {});
+    res.json({ deleted: true });
+});
+
+
 
 module.exports = router;
+

@@ -5,6 +5,13 @@ addNoteButton.addEventListener('click', async () => {
     window.location.href = request.url;
 });
 
+const addListButton = document.querySelector('#add-list');
+addListButton.addEventListener('click', async () => {
+    let request = await fetch('/lists');
+    window.location.href = request.url;
+});
+
+
 //listen click within each note
 const noteContainer = document.querySelector('#notesList');
 noteContainer.addEventListener('click', (event)=> {
