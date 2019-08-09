@@ -9,14 +9,17 @@ addNoteButton.addEventListener('click', async () => {
 const noteContainer = document.querySelector('#notesList');
 noteContainer.addEventListener('click', (event)=> {
     const target = event.target;
-    const cardType = target.closest('.col-4').dataset.type;
-    const id = target.closest('.col-4').dataset.id;
 
-    //if click is on the close-button - delete the note
-    if (target.classList.contains('btn-danger')) {
-       return deleteNote(id, cardType);
-    } else {
-        return openNote(id, cardType);
+    if (target.closest('.col-4') !== null) {
+        const cardType = target.closest('.col-4').dataset.type;
+        const id = target.closest('.col-4').dataset.id;
+
+        //if click is on the close-button - delete the note
+        if (target.classList.contains('btn-danger')) {
+            return deleteNote(id, cardType);
+        } else {
+            return openNote(id, cardType);
+        }
     }
 });
 
