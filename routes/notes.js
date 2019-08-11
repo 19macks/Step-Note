@@ -29,7 +29,6 @@ router.post('/api/notes', async (req, res) => {
 router.put('/api/notes/:id', async (req, res) => {
 
     let note = req.body;
-    // console.log(req.body);
     await Note.updateOne({_id: req.body._id }, note,{ runValidators: true },
         (err)=> {
         if (err) return console.error(err);

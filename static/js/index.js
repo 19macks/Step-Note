@@ -5,49 +5,57 @@ addNoteButton.addEventListener('click', async () => {
     window.location.href = request.url;
 });
 
-//listen click within each note - whether click is on the close-button or on the card-body itself
+const addListButton = document.querySelector('#add-list');
+addListButton.addEventListener('click', async () => {
+    let request = await fetch('/lists');
+    window.location.href = request.url;
+});
+
+
+//listen click within each note
 const noteContainer = document.querySelector('#notesList');
 noteContainer.addEventListener('click', (event)=> {
-    const note = event.target;
-    let id = note.dataset.id;
+    const target = event.target;
 
-    //if click is on the close-button - delete the note
-    if (note.classList.contains('btn-danger')) {
-       if (deleteNote(id)) {
-           const noteSelect = document.querySelector(`.col-4[data-id="${id}"]`);
-           return noteSelect.remove();
-       }
-   } else if (note.classList.contains('card-title') || note.classList.contains('card-text')) {
-        id = note.parentNode.dataset.id;
-        return openNote(id);
+    if (target.closest('.note-container') !== null) {
+        const cardType = target.closest('.note-container').dataset.type;
+        const id = target.closest('.note-container').dataset.id;
+
+        //if click is on the close-button - delete the note
+        if (target.classList.contains('btn-danger')) {
+            return deleteNote(id, cardType);
+        } else {
+            return openNote(id, cardType);
+        }
     }
-    //if click is on the card-body - go to the new route by card id
-   else {
-       id = note.dataset.id;
-       return openNote(id);
-   }
 });
 
 //delete note function with method DELETE
-async function deleteNote(id) {
+async function deleteNote(id, tmpPath) {
     let data = {
         _id: id
     };
 
-    let request = await fetch(`/api/notes/${id}`,{
+    let request = await fetch(`/api/${tmpPath}/${id}`,{
         method: "DELETE",
         headers: {
             'Content-Type': "application/json"
         },
         body: JSON.stringify(data)
     });
-    if (request.deleted) {
-        return true;
+
+    //response
+    let response = await request.json();
+    if (response.deleted) {
+        //select and delete card
+        const noteSelect = document.querySelector(`.note-container[data-id="${id}"]`);
+        noteSelect.remove();
     }
 }
 
 // open note function
-async function openNote(id) {
-    let req = await fetch(`/notes/${id}`);
+async function openNote(id, tmpPath) {
+    let req = await fetch(`/${tmpPath}/${id}`);
     window.location.href = req.url;
 }
+

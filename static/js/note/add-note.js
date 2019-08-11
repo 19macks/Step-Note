@@ -10,6 +10,7 @@
 
         // data will send to database, replace values of properties from input fields
         let data = {
+            _type: 'notes',
             title: titleValue,  // input 1
             text: textValue //input 2
         };
@@ -23,10 +24,6 @@
                 },
                 body: JSON.stringify(data)
             });
-
-        // let answer = await request.json();
-        // console.log(answer);
-        console.log(request);
 
         window.location = request.url;
 }
