@@ -15,7 +15,7 @@
 <body>
     <div class="container">
         <div class="col-sm-12 text-right">
-            <a href= "/"  class="btn btn-primary btn-lg font-weight-bold m-2 p-3">Home</a>
+            <a href= "/"  class="btn btn-primary btn-lg font-weight-bold mt-5 p-3">Home</a>
         </div>
         <div class="form-group">
             <label for="note-title">Title</label>
@@ -52,10 +52,10 @@
                         </div>
                     </div>
                 </form>
-                <button class="btn btn-primary col-xs-12 creat-list-btn">Edit list</button>
+                <button data-id="<%= list._id %>" class="btn btn-primary col-xs-12 edit-list-btn">Edit list</button>
             </div>
         </div>
     </div>
-<script src="/js/list/add-list.js"></script>
+<script src="/js/list/edit-list.js"></script>
 </body>
 </html>
