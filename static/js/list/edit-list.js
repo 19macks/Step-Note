@@ -1,7 +1,9 @@
 const saveBtn = document.querySelector(".input-group-addon")
 const taskList = document.querySelector('.container-for-task-item')
 const area = document.querySelector('.area-label')
-const creatToDoList = document.querySelector('.creat-list-btn')
+const editBtnToDo = document.querySelector('.edit-list-btn')
+const checked = document.querySelector('.checkbox')
+
 let currentLabelItem
 let currentLabelVal
 
@@ -31,8 +33,9 @@ saveBtn.addEventListener('click', () => {
 })
 
 taskList.addEventListener('click', (event) => {
-    let taskWrap = event.target.closest('.funkyradio')
     let target = event.target;
+    let taskWrap = target.closest('.funkyradio')
+    // console.log(target);
 
     if (target.className === 'glyphicon glyphicon-edit text-warning' ) {
         editTask(target)
@@ -46,41 +49,44 @@ taskList.addEventListener('click', (event) => {
 
 })
 
-creatToDoList.addEventListener('click', async () => {
+editBtnToDo.addEventListener('click', async () => {
     let titleVal = document.querySelector('#note-title').value
-    let listsTaskText = taskList.querySelectorAll('label')
-    let listsTaskStatus = taskList.querySelectorAll('input')
+    let listsTasktText = taskList.querySelectorAll('label')
+    let listsTasktStatus = taskList.querySelectorAll('input')
     let lists = []
 
-if (listsTaskText.length !== 0) {
-    for (let i = 0; i < listsTaskText.length; i++ )
-            {
-                let task = {
-                    text: listsTaskText[i].innerText,
-                       status: listsTaskStatus[i].checked
-                }
-                lists.push(task)
+    if (listsTasktText.length !== 0) {
+        for (let i = 0; i < listsTasktText.length; i++ )
+        {
+            let task = {
+                text: listsTasktText[i].innerText,
+                status: listsTasktStatus[i].checked
             }
-    let data = {
-        _type: 'lists',
-        title: titleVal,
-        inputs: lists
+            lists.push(task)
+        }
+        let listId = editBtnToDo.dataset.id
+        console.log(listId);
+        let data = {
+            _id: listId,
+            _type: 'lists',
+            title: titleVal,
+            inputs: lists
+        }
+        let req = await fetch(`/api/lists/${listId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        window.location.href = req.url
     }
-    let req = await fetch('/api/lists', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-    })
-    window.location.href = req.url
-    }
-
 })
 
 function editTask(target) {
     currentLabelItem = target.closest('.funkyradio')
-    currentLabelVal = target.parentElement.parentElement.querySelector('.task').innerText
+    // currentLabelVal = target.parentElement.parentElement.querySelector('.task').innerText
+    currentLabelVal = target.closest('.task').innerText
     let areaEdit = taskList.querySelector('#form-edit-wrap')
 
     if (areaEdit) {
@@ -111,4 +117,3 @@ function saveChangeTask(target) {
     areaEdit.closest('.form-group').remove()
     area.closest('.area-creat-task').classList.remove('not-active')
 }
-
