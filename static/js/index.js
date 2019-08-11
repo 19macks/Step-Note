@@ -45,12 +45,8 @@ async function deleteNote(id, tmpPath) {
     });
 
     //response
-    let response = await request.json();
-    if (response.deleted) {
-        //select and delete card
         const noteSelect = document.querySelector(`.note-container[data-id="${id}"]`);
         noteSelect.remove();
-    }
 }
 
 // open note function

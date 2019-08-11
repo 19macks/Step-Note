@@ -33,7 +33,7 @@ router.put('/api/lists/:id', async (req, res) => {
 
 router.delete('/api/lists/:id', async (req, res) => {
     await List.deleteOne({_id: req.body._id }, () => {});
-    res.json({ deleted: true });
+    res.redirect('/')
 });
 
 module.exports = router;

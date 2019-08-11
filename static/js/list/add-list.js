@@ -95,8 +95,7 @@ function editTask(target) {
                                             </div>
                                          </div>`
 
-    area.closest('.area-creat-task').classList.add('not-active')
-    area.value = currentLabelVal
+    area.value = ""
     currentLabelItem.appendChild(formForEditArea)
 }
 function saveChangeTask(target) {
