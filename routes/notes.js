@@ -39,7 +39,7 @@ router.put('/api/notes/:id', async (req, res) => {
 //find note by ID and remove it
 router.delete('/api/notes/:id', async (req, res) => {
     await Note.deleteOne({_id: req.body._id }, () => {});
-    res.json({ deleted: true });
+    res.redirect('/')
 });
 
 module.exports = router;

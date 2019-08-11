@@ -2,7 +2,8 @@ const saveBtn = document.querySelector(".input-group-addon")
 const taskList = document.querySelector('.container-for-task-item')
 const area = document.querySelector('.area-label')
 const editBtnToDo = document.querySelector('.edit-list-btn')
-const checked = document.querySelector('.checkbox')
+const checked = document.querySelector('.checkbox');
+const deleteListButton = document.querySelector('.delete-list-btn');
 
 let currentLabelItem
 let currentLabelVal
@@ -83,10 +84,25 @@ editBtnToDo.addEventListener('click', async () => {
     }
 })
 
+deleteListButton.addEventListener('click', async() => {
+    let listId = deleteListButton.dataset.id;
+    let data = {
+        _id: listId
+    }
+
+    let req = await fetch(`/api/lists/${listId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    window.location.href = req.url
+});
+
 function editTask(target) {
     currentLabelItem = target.closest('.funkyradio')
-    // currentLabelVal = target.parentElement.parentElement.querySelector('.task').innerText
-    currentLabelVal = target.closest('.task').innerText
+    currentLabelVal = target.parentElement.parentElement.querySelector('.task').innerText
     let areaEdit = taskList.querySelector('#form-edit-wrap')
 
     if (areaEdit) {
@@ -101,8 +117,8 @@ function editTask(target) {
                                             </div>
                                          </div>`
 
-    area.closest('.area-creat-task').classList.add('not-active')
-    area.value = currentLabelVal
+
+    area.value = ""
     currentLabelItem.appendChild(formForEditArea)
 }
 function saveChangeTask(target) {

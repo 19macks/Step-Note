@@ -24,7 +24,8 @@
         <textarea type="text" class="form-control" id="note-text" style="font-size: large"><%= note.text %></textarea>
     </div>
     <div class="text-center">
-        <button id = "editNoteButton" class="btn btn-primary btn-lg font-weight-bold" data-id="<%= note._id %>">Edit note</button>
+        <button id = "editNoteButton" class="btn btn-primary col-xs-12 mt-3" data-id="<%= note._id %>">Edit note</button>
+        <button class="btn btn-danger col-xs-12 mt-3 delete-note-btn" data-id="<%= note._id %>">Delete note</button>
     </div>
 </div>
 
