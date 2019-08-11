@@ -13,12 +13,11 @@ saveBtn.addEventListener('click', () => {
     if (taskVal) {
         warningText.classList.add('not-active')
         warningText.classList.remove('active')
-        console.log("ok");
         let id = Date.now()
 
         taskList.innerHTML += `<div class="funkyradio">
                                 <div class="funkyradio-success">
-                                    <input type="checkbox" name="checkbox" id='${id}' >
+                                    <input class="checkbox" type="checkbox" name="checkbox" id='${id}' >
                                     <label class="task" for='${id}'>${taskVal}</label>
                                     <span class="${id} close-btn bg-white"><span class="glyphicon glyphicon-remove text-danger"></span></span>
                                     <span class="${id} edit-btn bg-white"><span class="glyphicon glyphicon-edit text-warning"></span></span>
@@ -41,22 +40,24 @@ taskList.addEventListener('click', (event) => {
         saveChangeTask(target)
     } else if (target.className === 'glyphicon glyphicon-remove text-danger') {
         taskWrap.remove()
+    } else if (target.className === 'checkbox') {
+        target.hasAttribute('checked') ? target.removeAttribute('checked') : target.setAttribute('checked', '')
     }
 
 })
 
 creatToDoList.addEventListener('click', async () => {
     let titleVal = document.querySelector('#note-title').value
-    let listsTasktText = taskList.querySelectorAll('label')
-    let listsTasktStatus = taskList.querySelectorAll('input')
+    let listsTaskText = taskList.querySelectorAll('label')
+    let listsTaskStatus = taskList.querySelectorAll('input')
     let lists = []
 
-if (listsTasktText.length !== 0 && titleVal !== "") {
-    for (let i = 0; i < listsTasktText.length; i++ )
+if (listsTaskText.length !== 0) {
+    for (let i = 0; i < listsTaskText.length; i++ )
             {
                 let task = {
-                    text: listsTasktText[i].innerText,
-                    status: listsTasktStatus[i].checked
+                    text: listsTaskText[i].innerText,
+                       status: listsTaskStatus[i].checked
                 }
                 lists.push(task)
             }

@@ -1,7 +1,9 @@
 const saveBtn = document.querySelector(".input-group-addon")
 const taskList = document.querySelector('.container-for-task-item')
 const area = document.querySelector('.area-label')
-const editToDoList = document.querySelector('.edit-list-btn')
+const editBtnToDo = document.querySelector('.edit-list-btn')
+const checked = document.querySelector('.checkbox')
+
 let currentLabelItem
 let currentLabelVal
 
@@ -13,12 +15,11 @@ saveBtn.addEventListener('click', () => {
     if (taskVal) {
         warningText.classList.add('not-active')
         warningText.classList.remove('active')
-        console.log("ok");
         let id = Date.now()
 
         taskList.innerHTML += `<div class="funkyradio">
                                 <div class="funkyradio-success">
-                                    <input type="checkbox" name="checkbox" id='${id}' >
+                                    <input class="checkbox" type="checkbox" name="checkbox" id='${id}' >
                                     <label class="task" for='${id}'>${taskVal}</label>
                                     <span class="${id} close-btn bg-white"><span class="glyphicon glyphicon-remove text-danger"></span></span>
                                     <span class="${id} edit-btn bg-white"><span class="glyphicon glyphicon-edit text-warning"></span></span>
@@ -34,6 +35,7 @@ saveBtn.addEventListener('click', () => {
 taskList.addEventListener('click', (event) => {
     let target = event.target;
     let taskWrap = target.closest('.funkyradio')
+    // console.log(target);
 
     if (target.className === 'glyphicon glyphicon-edit text-warning' ) {
         editTask(target)
@@ -41,17 +43,19 @@ taskList.addEventListener('click', (event) => {
         saveChangeTask(target)
     } else if (target.className === 'glyphicon glyphicon-remove text-danger') {
         taskWrap.remove()
+    } else if (target.className === 'checkbox') {
+        target.hasAttribute('checked') ? target.removeAttribute('checked') : target.setAttribute('checked', '')
     }
 
 })
 
-editToDoList.addEventListener('click', async () => {
+editBtnToDo.addEventListener('click', async () => {
     let titleVal = document.querySelector('#note-title').value
     let listsTasktText = taskList.querySelectorAll('label')
     let listsTasktStatus = taskList.querySelectorAll('input')
     let lists = []
 
-    if (listsTasktText.length !== 0 && titleVal !== "") {
+    if (listsTasktText.length !== 0) {
         for (let i = 0; i < listsTasktText.length; i++ )
         {
             let task = {
@@ -60,7 +64,8 @@ editToDoList.addEventListener('click', async () => {
             }
             lists.push(task)
         }
-        let listId = editToDoList.dataset.id
+        let listId = editBtnToDo.dataset.id
+        console.log(listId);
         let data = {
             _id: listId,
             _type: 'lists',
@@ -76,12 +81,12 @@ editToDoList.addEventListener('click', async () => {
         })
         window.location.href = req.url
     }
-
 })
 
 function editTask(target) {
     currentLabelItem = target.closest('.funkyradio')
-    currentLabelVal = target.parentElement.parentElement.querySelector('.task').innerText
+    // currentLabelVal = target.parentElement.parentElement.querySelector('.task').innerText
+    currentLabelVal = target.closest('.task').innerText
     let areaEdit = taskList.querySelector('#form-edit-wrap')
 
     if (areaEdit) {
