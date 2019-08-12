@@ -4,8 +4,7 @@ const List = require('../models/list');
 
 router.get('/lists', (req, res) => {
     res.render('add-list')
-} )
-
+})
 
 // view and edit list
 router.get('/lists/:id', async (req, res) => {
@@ -23,12 +22,19 @@ router.post('/api/lists', async (req, res) => {
     })
 });
 
-router.delete('/api/lists/:id', async (req, res) => {
-    await List.deleteOne({_id: req.body._id }, () => {});
-    res.json({ deleted: true });
+router.put('/api/lists/:id', async (req, res) => {
+    let list = req.body;
+    await List.updateOne({_id: req.body._id }, list,{ runValidators: true },
+        (err)=> {
+            if (err) return console.error(err);
+        res.redirect('/');
+        });
 });
 
-
+router.delete('/api/lists/:id', async (req, res) => {
+    await List.deleteOne({_id: req.body._id }, () => {});
+    res.redirect('/')
+});
 
 module.exports = router;
 

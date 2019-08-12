@@ -17,9 +17,9 @@ const noteContainer = document.querySelector('#notesList');
 noteContainer.addEventListener('click', (event)=> {
     const target = event.target;
 
-    if (target.closest('.col-4') !== null) {
-        const cardType = target.closest('.col-4').dataset.type;
-        const id = target.closest('.col-4').dataset.id;
+    if (target.closest('.note-container') !== null) {
+        const cardType = target.closest('.note-container').dataset.type;
+        const id = target.closest('.note-container').dataset.id;
 
         //if click is on the close-button - delete the note
         if (target.classList.contains('btn-danger')) {
@@ -45,12 +45,8 @@ async function deleteNote(id, tmpPath) {
     });
 
     //response
-    let response = await request.json();
-    if (response.deleted) {
-        //select and delete card
-        const noteSelect = document.querySelector(`.col-4[data-id="${id}"]`);
+        const noteSelect = document.querySelector(`.note-container[data-id="${id}"]`);
         noteSelect.remove();
-    }
 }
 
 // open note function
