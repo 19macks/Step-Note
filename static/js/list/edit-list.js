@@ -67,20 +67,26 @@ editBtnToDo.addEventListener('click', async () => {
         }
         let listId = editBtnToDo.dataset.id
         console.log(listId);
+
         let data = {
             _id: listId,
             _type: 'lists',
             title: titleVal,
             inputs: lists
         }
+
         let req = await fetch(`/api/lists/${listId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(data)
-        })
-        window.location.href = req.url
+        });
+
+        let answer = await req.json();
+        if (answer.edited) {
+            window.location.href = '/';
+        }
     }
 })
 
@@ -96,8 +102,12 @@ deleteListButton.addEventListener('click', async() => {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data)
-    })
-    window.location.href = req.url
+    });
+
+    let answer = await req.json();
+    if (answer.deleted) {
+        window.location.href = '/';
+    }
 });
 
 function editTask(target) {

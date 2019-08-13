@@ -1,14 +1,12 @@
 //listen click on the button to add new note
 const addNoteButton = document.querySelector('#add-note');
-addNoteButton.addEventListener('click', async () => {
-    let request = await fetch('/notes');
-    window.location.href = request.url;
+addNoteButton.addEventListener('click',() => {
+    window.location.href = '/notes';
 });
 
 const addListButton = document.querySelector('#add-list');
-addListButton.addEventListener('click', async () => {
-    let request = await fetch('/lists');
-    window.location.href = request.url;
+addListButton.addEventListener('click',() => {
+    window.location.href = '/lists';
 });
 
 
@@ -44,14 +42,15 @@ async function deleteNote(id, tmpPath) {
         body: JSON.stringify(data)
     });
 
-    //response
+    let answer = await request.json();
+    if (answer.deleted){
         const noteSelect = document.querySelector(`.note-container[data-id="${id}"]`);
         noteSelect.remove();
+    }
 }
 
 // open note function
 async function openNote(id, tmpPath) {
-    let req = await fetch(`/${tmpPath}/${id}`);
-    window.location.href = req.url;
+    window.location.href = `/${tmpPath}/${id}`;
 }
 
