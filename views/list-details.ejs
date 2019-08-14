@@ -23,23 +23,26 @@
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <div class="container-for-task-item">
-
-                    <% list.inputs.forEach((task) => { %>
-                    <div class="funkyradio">
-                        <div class="funkyradio-success">
-                            <% if (task.status) { %>
-                                <input class="checkbox" type="checkbox" name="checkbox" id= '<%= task._id %>' checked>
-                             <% } else { %>
-                                <input class="checkbox" type="checkbox" name="checkbox" id='<%= task._id %>'>
-                            <% } %>
-                            <label class="task" for='<%= task._id %>'><%= task.text %></label>
-                            <span class="<%= task._id %> close-btn bg-white"><span class="glyphicon glyphicon-remove text-danger"></span></span>
-                            <span class="<%= task._id %> edit-btn bg-white"><span class="glyphicon glyphicon-edit text-warning"></span></span>
-                        </div>
+                <div class="border border-danger rounded p-3" id="uncompleted_tasks">
+                    <h3 class="text-danger text-center" >Uncompleted tasks</h3>
+                    <div class="container-for-task-item">
+                        <% list.inputs.forEach((task) => { %>
+                            <div class="funkyradio">
+                                <div class="funkyradio-success">
+                                    <% if (task.status) { %>
+                                        <input class="checkbox" type="checkbox" name="checkbox" id= '<%= task._id %>' checked>
+                                    <% } else { %>
+                                        <input class="checkbox" type="checkbox" name="checkbox" id='<%= task._id %>'>
+                                    <% } %>
+                                    <label class="task" for='<%= task._id %>'><%= task.text %></label>
+                                    <span class="<%= task._id %> close-btn bg-white"><span class="glyphicon glyphicon-remove text-danger"></span></span>
+                                    <span class="<%= task._id %> edit-btn bg-white"><span class="glyphicon glyphicon-edit text-warning"></span></span>
+                                </div>
+                            </div>
+                        <% }) %>
                     </div>
-                    <% }) %>
                 </div>
+
                 <form method="post">
                     <div class="form-group area-creat-task">
                         <label for="validate-length">NEW TASK</label>
@@ -54,6 +57,12 @@
                 </form>
                 <button data-id="<%= list._id %>" class="btn btn-primary col-xs-12 edit-list-btn">Edit list</button>
                 <button data-id="<%= list._id %>" class="btn btn-danger col-xs-12 mt-3 delete-list-btn">Delete list</button>
+            </div>
+        </div>
+        <div id="completed_tasks" class="border border-primary rounded funkyradio">
+            <h3 class="text-primary text-center">Completed tasks</h3>
+            <div class="container-for-task-item" >
+
             </div>
         </div>
     </div>

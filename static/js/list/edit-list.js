@@ -4,11 +4,11 @@ const area = document.querySelector('.area-label')
 const editBtnToDo = document.querySelector('.edit-list-btn')
 const checked = document.querySelector('.checkbox');
 const deleteListButton = document.querySelector('.delete-list-btn');
-
+// let isDone = false;
 let currentLabelItem
 let currentLabelVal
 
-saveBtn.addEventListener('click', () => {
+        saveBtn.addEventListener('click', () => {
     const warningText = document.querySelector('.warning-enter-text')
     const area = document.querySelector('.area-label')
     let taskVal = area.value
@@ -20,25 +20,26 @@ saveBtn.addEventListener('click', () => {
 
         taskList.innerHTML += `<div class="funkyradio">
                                 <div class="funkyradio-success">
-                                    <input class="checkbox" type="checkbox" name="checkbox" id='${id}' >
+                                    <input class="checkbox" type="checkbox"  name="checkbox" id='${id}' >
                                     <label class="task" for='${id}'>${taskVal}</label>
                                     <span class="${id} close-btn bg-white"><span class="glyphicon glyphicon-remove text-danger"></span></span>
                                     <span class="${id} edit-btn bg-white"><span class="glyphicon glyphicon-edit text-warning"></span></span>
                                     </div>
                                 </div>`
         area.value = ''
+        // isDone = !isDone
     } else {
         warningText.classList.add('active')
         warningText.classList.remove('not-active')
     }
 })
 
-taskList.addEventListener('click', (event) => {
+taskList.addEventListener('click', function(event) {
     let target = event.target;
     let taskWrap = target.closest('.funkyradio')
     // console.log(target);
 
-    if (target.className === 'glyphicon glyphicon-edit text-warning' ) {
+    if (target.className === 'glyphicon glyphicon-edit text-warning') {
         editTask(target)
     } else if (target.className === 'glyphicon glyphicon-ok save-change') {
         saveChangeTask(target)
@@ -48,6 +49,20 @@ taskList.addEventListener('click', (event) => {
         target.hasAttribute('checked') ? target.removeAttribute('checked') : target.setAttribute('checked', '')
     }
 
+    if (target.className === 'task') {
+        const checkedElem = target.closest('.funkyradio-success').children[0]
+        console.log(checkedElem);
+        console.log(`IS CHECKED: ${checkedElem.hasAttribute('checked')}`)
+        if (!checkedElem.hasAttribute('checked')) {
+            const completed = document.getElementsByClassName('container-for-task-item')[1];
+            completed.appendChild(target.closest('.funkyradio'));
+
+            // target.setAttribute('data-done', `${!isDone}`)
+            // isDone = !isDone;
+        }
+
+
+    }
 })
 
 editBtnToDo.addEventListener('click', async () => {
@@ -118,6 +133,7 @@ function editTask(target) {
                                          </div>`
 
 
+
     area.value = ""
     currentLabelItem.appendChild(formForEditArea)
 }
@@ -133,3 +149,28 @@ function saveChangeTask(target) {
     areaEdit.closest('.form-group').remove()
     area.closest('.area-creat-task').classList.remove('not-active')
 }
+
+document.getElementById("completed_tasks").addEventListener("click", ({target}) => {
+
+    if (target.className === 'task') {
+//         const checkedElem = target.closest('.funkyradio-success').children[0]
+// console.log(`IS CHECKED: ${checkedElem.hasAttribute('checked')}`)
+//      if (!checkedElem.hasAttribute('checked')) {
+//          const notCompleted = document.getElementById('uncompleted_tasks');
+//             notCompleted.appendChild(target.closest('.funkyradio'));
+//}
+        const checkedElem = target.closest('.funkyradio-success').children[0];
+        console.log(`IS CHECKED: ${checkedElem.hasAttribute('checked')}`)
+        if (!checkedElem.hasAttribute('checked')) {
+            const notCompleted = document.getElementsByClassName('container-for-task-item')[0];
+            console.log(checkedElem);
+            notCompleted.appendChild(target.closest('.funkyradio'));
+            console.log(target);
+            // target.setAttribute('data-done', `${!isDone}`)
+            // isDone = !isDone;
+        }
+
+        }
+
+
+});

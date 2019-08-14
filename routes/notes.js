@@ -7,7 +7,6 @@ router.get('/notes', (req, res) => {
     //render notes /views/add-note.ejs
     res.render('add-note');
 });
-
 // one note details
 router.get('/notes/:id', async (req, res) => {
     let note = await Note.findById(req.params.id);
