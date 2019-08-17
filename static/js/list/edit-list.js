@@ -36,18 +36,17 @@ taskList.addEventListener("click", taskManager);
 
 const uncompletedWrapper = document.querySelector('#uncompleted_tasks');
 const completedWrapper = document.querySelector('#completed_tasks');
-console.log(completedWrapper);
-let new1 = uncompletedWrapper.querySelectorAll("label");
-console.log(new1);
 
 editBtnToDo.addEventListener("click", async () => {
     let titleVal = document.querySelector("#note-title").value;
+
+    // uncompleted task items
     let uncompletedTaskText = uncompletedWrapper.querySelectorAll("label");
     let uncompletedTaskStatus = uncompletedWrapper.querySelectorAll("input");
 
+    // completed task items
     let completedTaskText = completedWrapper.querySelectorAll("label");
     let completedTaskStatus = completedWrapper.querySelectorAll("input");
-
 
     let lists = [];
     if (uncompletedTaskText.length !== 0 || completedTaskText.length !== 0) {
@@ -61,6 +60,7 @@ editBtnToDo.addEventListener("click", async () => {
                 lists.push(task);
             }
         }
+
         if (completedTaskText.length !== 0) {
             for (let i = 0; i < completedTaskText.length; i++) {
                 let task = {
@@ -72,14 +72,13 @@ editBtnToDo.addEventListener("click", async () => {
         }
 
         let listId = editBtnToDo.dataset.id;
-        console.log(listId);
 
         let data = {
             _id: listId,
             _type: "lists",
             title: titleVal,
             inputs: lists
-        }
+        };
 
         let req = await fetch(`/api/lists/${listId}`, {
             method: "PUT",
@@ -95,11 +94,13 @@ editBtnToDo.addEventListener("click", async () => {
         }
     }
 });
+
 deleteListButton.addEventListener("click", async () => {
     let listId = deleteListButton.dataset.id;
     let data = {
         _id: listId
     };
+
     let req = await fetch(`/api/lists/${listId}`, {
         method: "DELETE",
         headers: {
@@ -137,6 +138,7 @@ function editTask(target) {
     area.value = "";
     currentLabelItem.appendChild(formForEditArea);
 }
+
 function saveChangeTask(event) {
     const taskType = event.currentTarget.parentElement.attributes.id.value;
     if (taskType === "uncompleted_tasks") {
