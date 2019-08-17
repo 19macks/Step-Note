@@ -30,9 +30,15 @@
                             <% if (note.inputs) { %>
                                 <% note.inputs.forEach(input => { %>
                                     <% if (!input.status) { %>
-                                        <p class="card-text font-italic text-secondary mt-3 h6"><%= input.text %></p>
+                                        <p class=" card-text font-italic text-secondary mt-3 h6"><%= input.text %></p>
                                     <% } %>
                                 <% }) %>
+                                    <% note.inputs.forEach(input => { %>
+                                        <% if (input.status) { %>
+                                            <p class=" card-text font-italic text-secondary mt-3 h6"><del><%= input.text %></del></p>
+                                        <% } %>
+                                    <% }) %>
+
                             <% } else { %>
                                 <p class="card-text font-italic text-secondary mt-3 h6"><%= note.text %></p>
                             <% } %>
