@@ -104,6 +104,11 @@
     right: 12px;
     top: 38px;
 }
+
+.line-through {
+    text-decoration: line-through;
+}
+
 .edit-btn {
     position: absolute;
     right: 34px;

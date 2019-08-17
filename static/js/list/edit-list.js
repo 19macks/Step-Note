@@ -147,11 +147,10 @@ function saveChangeTask(event) {
         editTaskType(completedTasks);
     }
 }
-document
-    .getElementById("completed_tasks")
-    .addEventListener("click", ({ target }) => {
+document.getElementById("completed_tasks").addEventListener("click", ({ target }) => {
         if (target.className === "task") {
             toggleDone(target, 0);
+            // target.classList.remove("line-through")
         }
     });
 completedTasks.addEventListener("click", taskManager);
@@ -171,6 +170,7 @@ function taskManager(event) {
     }
     if (target.className === "task") {
         toggleDone(target, 1);
+        // target.classList.add("line-through")
     }
 }
 function toggleDone(target, id) {
