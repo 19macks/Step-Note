@@ -148,11 +148,11 @@ function saveChangeTask(event) {
     }
 }
 document.getElementById("completed_tasks").addEventListener("click", ({ target }) => {
-        if (target.className === "task") {
-            toggleDone(target, 0);
-            // target.classList.remove("line-through")
-        }
-    });
+    if (target.className === "task") {
+        toggleDone(target, 0);
+        // target.classList.remove("line-through")
+    }
+});
 completedTasks.addEventListener("click", taskManager);
 function taskManager(event) {
     let target = event.target;
