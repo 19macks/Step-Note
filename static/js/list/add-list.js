@@ -53,30 +53,35 @@ creatToDoList.addEventListener('click', async () => {
     let lists = []
 
 if (listsTaskText.length !== 0) {
-    for (let i = 0; i < listsTaskText.length; i++ )
-            {
+    for (let i = 0; i < listsTaskText.length; i++ ) {
                 let task = {
                     text: listsTaskText[i].innerText,
                        status: listsTaskStatus[i].checked
-                }
+                };
                 lists.push(task)
             }
+
     let data = {
         _type: 'lists',
         title: titleVal,
         inputs: lists
-    }
+    };
+
     let req = await fetch('/api/lists', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data)
-    })
-    window.location.href = req.url
+    });
+
+        let answer = await req.json();
+        if (answer.created) {
+            window.location.href = '/';
+        }
     }
 
-})
+});
 
 function editTask(target) {
     currentLabelItem = target.closest('.funkyradio')

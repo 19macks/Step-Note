@@ -31,28 +31,55 @@ saveBtn.addEventListener("click", () => {
         warningText.classList.remove("not-active");
     }
 });
+
 taskList.addEventListener("click", taskManager);
+
+const uncompletedWrapper = document.querySelector('#uncompleted_tasks');
+const completedWrapper = document.querySelector('#completed_tasks');
+
 editBtnToDo.addEventListener("click", async () => {
     let titleVal = document.querySelector("#note-title").value;
-    let listsTasktText = taskList.querySelectorAll("label");
-    let listsTasktStatus = taskList.querySelectorAll("input");
+
+    // uncompleted task items
+    let uncompletedTaskText = uncompletedWrapper.querySelectorAll("label");
+    let uncompletedTaskStatus = uncompletedWrapper.querySelectorAll("input");
+
+    // completed task items
+    let completedTaskText = completedWrapper.querySelectorAll("label");
+    let completedTaskStatus = completedWrapper.querySelectorAll("input");
+
     let lists = [];
-    if (listsTasktText.length !== 0) {
-        for (let i = 0; i < listsTasktText.length; i++) {
-            let task = {
-                text: listsTasktText[i].innerText,
-                status: listsTasktStatus[i].checked
-            };
-            lists.push(task);
+    if (uncompletedTaskText.length !== 0 || completedTaskText.length !== 0) {
+
+        if (uncompletedTaskText.length !== 0) {
+            for (let i = 0; i < uncompletedTaskText.length; i++) {
+                let task = {
+                    text: uncompletedTaskText[i].innerText,
+                    status: uncompletedTaskStatus[i].checked
+                };
+                lists.push(task);
+            }
         }
+
+        if (completedTaskText.length !== 0) {
+            for (let i = 0; i < completedTaskText.length; i++) {
+                let task = {
+                    text: completedTaskText[i].innerText,
+                    status: completedTaskStatus[i].checked
+                };
+                lists.push(task);
+            }
+        }
+
         let listId = editBtnToDo.dataset.id;
-        console.log(listId);
+
         let data = {
             _id: listId,
             _type: "lists",
             title: titleVal,
             inputs: lists
         };
+
         let req = await fetch(`/api/lists/${listId}`, {
             method: "PUT",
             headers: {
@@ -60,14 +87,20 @@ editBtnToDo.addEventListener("click", async () => {
             },
             body: JSON.stringify(data)
         });
-        window.location.href = req.url;
+
+        let answer = await req.json();
+        if (answer.edited) {
+            window.location.href = '/';
+        }
     }
 });
+
 deleteListButton.addEventListener("click", async () => {
     let listId = deleteListButton.dataset.id;
     let data = {
         _id: listId
     };
+
     let req = await fetch(`/api/lists/${listId}`, {
         method: "DELETE",
         headers: {
@@ -75,8 +108,13 @@ deleteListButton.addEventListener("click", async () => {
         },
         body: JSON.stringify(data)
     });
-    window.location.href = req.url;
+
+    let answer = await req.json();
+    if (answer.deleted) {
+        window.location.href = '/';
+    }
 });
+
 function editTask(target) {
     currentLabelItem = target.closest(".funkyradio");
     currentLabelVal = target.parentElement.parentElement.querySelector(".task")
@@ -100,6 +138,7 @@ function editTask(target) {
     area.value = "";
     currentLabelItem.appendChild(formForEditArea);
 }
+
 function saveChangeTask(event) {
     const taskType = event.currentTarget.parentElement.attributes.id.value;
     if (taskType === "uncompleted_tasks") {
@@ -108,11 +147,10 @@ function saveChangeTask(event) {
         editTaskType(completedTasks);
     }
 }
-document
-    .getElementById("completed_tasks")
-    .addEventListener("click", ({ target }) => {
+document.getElementById("completed_tasks").addEventListener("click", ({ target }) => {
         if (target.className === "task") {
             toggleDone(target, 0);
+            // target.classList.remove("line-through")
         }
     });
 completedTasks.addEventListener("click", taskManager);
@@ -132,6 +170,7 @@ function taskManager(event) {
     }
     if (target.className === "task") {
         toggleDone(target, 1);
+        // target.classList.add("line-through")
     }
 }
 function toggleDone(target, id) {

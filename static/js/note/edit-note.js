@@ -29,7 +29,10 @@ async function editNote() {
             body: JSON.stringify(data)
         });
 
-    window.location.href = request.url;
+    let answer = await request.json();
+    if (answer.edited) {
+        window.location.href = '/';
+    }
 }
 
 async function deleteNote() {
@@ -48,5 +51,8 @@ async function deleteNote() {
             body: JSON.stringify(data)
         });
 
-    window.location.href = request.url;
+    let answer = await request.json();
+    if (answer.deleted){
+        window.location.href = '/';
+    }
 }

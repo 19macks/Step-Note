@@ -25,6 +25,9 @@
                 body: JSON.stringify(data)
             });
 
-        window.location = request.url;
+        let answer = await request.json();
+        if (answer.created) {
+            window.location.href = '/';
+        }
 }
 

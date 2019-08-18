@@ -20,7 +20,7 @@ router.post('/api/notes', async (req, res) => {
     let note = new Note(req.body);
     await note.save((err) => {
         if (err) return console.error(err);
-        res.redirect('/');
+        res.json( { created: true });
     })
 });
 
@@ -30,15 +30,15 @@ router.put('/api/notes/:id', async (req, res) => {
     let note = req.body;
     await Note.updateOne({_id: req.body._id }, note,{ runValidators: true },
         (err)=> {
-        if (err) return console.error(err);
-        res.redirect('/');
+            if (err) return console.error(err);
+            res.json({ edited: true });
         });
 });
 
 //find note by ID and remove it
 router.delete('/api/notes/:id', async (req, res) => {
-    await Note.deleteOne({_id: req.body._id }, () => {});
-    res.redirect('/')
+    await Note.deleteOne({_id: req.body._id } );
+    res.json({ deleted: true });
 });
 
 module.exports = router;
